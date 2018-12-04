@@ -1,0 +1,38 @@
+all: update_apt_get arp_scan python pip_configuration blind-surfer ssh_keys ansible cifs_utils network_mount sudo_without_password java8
+
+java8:
+	sudo add-apt-repository ppa:webupd8team/java
+	sudo apt-get update
+	sudo apt-get install oracle-java8-installer -y
+	sudo apt-get install oracle-java8-set-default -y
+	java -version
+
+python:
+	sudo apt-get install python-setuptools python-pip virtualenv -y
+	sudo pip install setuptools --upgrade
+
+ssh_keys:
+	mkdir -p ~/.ssh
+	cat auto_rsa.pub >> ~/.ssh/authorized_keys
+	cp ssh_config ~/.ssh/config
+	chmod 600 ~/.ssh/*
+
+pip_configuration:
+	mkdir -p ~/.pip
+	cp pip.conf ~/.pip/
+
+ansible:
+	sudo apt-get install ansible -y
+
+cifs_utils:
+	sudo apt-get install cifs-utils -y
+
+update_apt_get:
+	sudo apt-get update -y
+	sudo apt-get upgrade -y
+
+arp_scan:
+	sudo apt-get install arp-scan -y
+
+sudo_without_password:
+	sudo bash -c 'echo "auto    ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
