@@ -1,0 +1,125 @@
+set rtp+=~/Vundle.vim
+call vundle#begin()
+filetype off
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'jlanzarotta/bufexplorer'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'vim-scripts/paredit.vim'
+Plugin 'vim-scripts/mako.vim'
+Plugin 'guns/vim-clojure-static'
+Plugin 'tpope/vim-fugitive'
+Plugin 'https://github.com/kien/rainbow_parentheses.vim'
+Plugin 'tpope/vim-fireplace'
+Plugin 'tpope/vim-surround'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'nvie/vim-flake8'
+Plugin '907th/vim-auto-save'
+let g:auto_save = 1
+
+Plugin 'python-mode/python-mode'
+let g:pymode_options_max_line_length=200
+let g:pymode_folding=0
+let g:pymode_lint_on_fly = 0
+let g:pymode_lint_ignore = "W0611,W0401"
+let g:pymode_lint_on_write = 0
+let g:pymode_lint_checkers = ['pyflakes']
+let g:pymode_rope = 0
+
+version 6.0
+if &cp | set nocp | endif
+let s:cpo_save=&cpo
+set cpo&vim
+map! <S-Insert> <MiddleMouse>
+nmap gx <Plug>NetrwBrowseX
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
+map <S-Insert> <MiddleMouse>
+let &cpo=s:cpo_save
+unlet s:cpo_save
+set background=dark
+set backspace=indent,eol,start
+set fileencodings=ucs-bom,utf-8,default,latin1
+set guifont=Monospace\ 12
+set helplang=en
+set history=50
+set nomodeline
+set mouse=a
+set printoptions=paper:letter
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+set termencoding=utf-8
+" vim: set ft=vim :
+
+set hlsearch
+set smartindent
+map <C-J> :cn<CR>
+map <C-K> :cp<CR>
+set nonumber
+set grepprg=ack-grep\ --nogroup\ --column\ $*
+set grepformat=%f:%l:%c:%m
+set laststatus=2
+filetype plugin indent on
+
+
+"""""""""""""""""""
+" Alon's settings "
+"""""""""""""""""""
+if !exists("syntax_on")
+    syntax on
+endif
+
+syntax enable "Enable syntax hl
+set expandtab
+set shiftwidth=2
+set tabstop=2
+set smarttab
+set magic
+
+""""""""""""""""""""""""""""""
+" => Statusline
+" """"""""""""""""""""""""""""""
+" " Always hide the statusline
+set laststatus=2
+"
+" Format the statusline
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+
+function! CurDir()
+  let curdir = substitute(getcwd(), '/soft/omf/xtemp/', "~/", "g")
+  return curdir
+endfunction
+
+function! HasPaste()
+  if &paste
+    return 'PASTE MODE  '
+  else
+    return ''
+  endif
+endfunction
+
+" Set nice colors
+" background for normal text is light grey
+" Text below the last line is darker grey
+" Cursor is green, Cyan when ":lmap" mappings are active
+" Constants are not underlined but have a slightly lighter background
+highlight Normal guibg=Grey95
+highlight Cursor guibg=Green guifg=NONE
+highlight lCursor guibg=Cyan guifg=NONE
+highlight NonText guibg=grey80
+highlight Constant gui=NONE guibg=grey95
+highlight Special gui=NONE guibg=grey95
+
+colors darkblue
+set nobackup  
+set history=9000   " keep 50 lines of command line history
+set ruler   " show the cursor position all the time
+set showcmd   " display incomplete commands
+set incsearch   " do incremental searching
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+ 
+set ch=2    " Make command line two lines high
